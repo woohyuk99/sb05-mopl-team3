@@ -1,6 +1,8 @@
 plugins {
     id 'org.springframework.boot' version '4.0.1' apply false
     id 'io.spring.dependency-management' version '1.1.7' apply false
+    id 'org.sonarqube' version '6.0.1.5171'
+    id 'com.diffplug.spotless' version '6.25.0'
 }
 
 ext {
@@ -20,10 +22,21 @@ allprojects {
 subprojects {
     apply plugin: 'java-library'
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'jacoco'
+    apply plugin: 'com.diffplug.spotless'
 
     java {
         toolchain {
             languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+
+    spotless {
+        java {
+            googleJavaFormat()
+            removeUnusedImports()
+            trimTrailingWhitespace()
+            endWithNewline()
         }
     }
 
@@ -48,5 +61,22 @@ subprojects {
 
     test {
         useJUnitPlatform()
+        finalizedBy jacocoTestReport
+    }
+
+    jacocoTestReport {
+        dependsOn test
+        reports {
+            xml.required = true
+            html.required = true
+        }
+    }
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", System.getenv("SONAR_PROJECT_KEY")
+        property "sonar.organization", System.getenv("SONAR_ORGANIZATION")
+        property "sonar.host.url", "https://sonarcloud.io"
     }
 }
