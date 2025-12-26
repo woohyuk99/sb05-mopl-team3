@@ -1,0 +1,97 @@
+{
+  "compatibilities": [
+    "EC2",
+    "MANAGED_INSTANCES",
+    "FARGATE"
+  ],
+  "containerDefinitions": [
+    {
+      "cpu": 1024,
+      "environment": [
+        {
+          "name": "MOPL_PORT",
+          "value": "8080"
+        }
+      ],
+      "environmentFiles": [],
+      "essential": true,
+      "image": "690641653011.dkr.ecr.ap-northeast-2.amazonaws.com/mopl-api",
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/mopl-api-task",
+          "awslogs-create-group": "true",
+          "awslogs-region": "ap-northeast-2",
+          "awslogs-stream-prefix": "ecs"
+        },
+        "secretOptions": []
+      },
+      "memory": 3072,
+      "memoryReservation": 1024,
+      "mountPoints": [],
+      "name": "mopl-api-container",
+      "portMappings": [
+        {
+          "appProtocol": "http",
+          "containerPort": 8080,
+          "hostPort": 8080,
+          "name": "mopl-api-container-8080-tcp",
+          "protocol": "tcp"
+        }
+      ],
+      "systemControls": [],
+      "ulimits": [],
+      "volumesFrom": []
+    }
+  ],
+  "cpu": "1024",
+  "enableFaultInjection": false,
+  "executionRoleArn": "arn:aws:iam::690641653011:role/ecsTaskExecutionRole",
+  "family": "mopl-api-task",
+  "memory": "3072",
+  "networkMode": "awsvpc",
+  "placementConstraints": [],
+  "registeredAt": "2025-12-26T02:10:28.012Z",
+  "registeredBy": "arn:aws:iam::690641653011:user/part4-team3",
+  "requiresAttributes": [
+    {
+      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+    },
+    {
+      "name": "ecs.capability.execution-role-awslogs"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+    },
+    {
+      "name": "ecs.capability.execution-role-ecr-pull"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+    },
+    {
+      "name": "ecs.capability.task-eni"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+    }
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "revision": 1,
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "status": "ACTIVE",
+  "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:690641653011:task-definition/mopl-api-task:1",
+  "volumes": [],
+  "tags": []
+}
